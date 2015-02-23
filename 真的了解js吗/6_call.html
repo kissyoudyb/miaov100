@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script>
+    var obj = {
+      aaa: function(){
+          alert(this);
+      }
+    };
+
+    var arr = [1,2,3];
+
+    obj.aaa.call(arr);
+</script>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script>
+window.onload = function(){
+    var oInput = document.getElementById('input1');
+    var oUl = document.getElementById('ul1');
+    var iNow = 0;
+
+    oInput.onclick = function(){
+        var oLi = document.createElement('li');
+        oLi.innerHTML = iNow++;
+        oUl.appendChild(oLi);
+    }
+}
+</script>
+<body>
+<input type="button" value="添加" id="input1" />
+<ul id="ul1">
+
+
+</ul>
+</body>
+</html>
