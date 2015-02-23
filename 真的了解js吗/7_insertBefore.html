@@ -10,17 +10,18 @@ window.onload = function(){
     var oUl = document.getElementById('ul1');
     var iNow = 0;
 
+    var aLi = oUl.getElementsByTagName('li');
     oInput.onclick = function(){
         var oLi = document.createElement('li');
         oLi.innerHTML = iNow++;
-        oUl.appendChild(oLi);
+
+        oUl.insertBefore(oLi, aLi[0]); //insertBefore默认当第二个参数为null的时候会使用appendChild来添加元素
     }
 }
 </script>
 <body>
 <input type="button" value="添加" id="input1" />
 <ul id="ul1">
-
 
 </ul>
 </body>
