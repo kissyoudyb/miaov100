@@ -28,3 +28,47 @@
         4.minimum-scale 允许缩放的最小比例
         5.maximum-scale 允许缩放的最大比例
         6.target-densitydpi [dpi_value | device-dpi | high-dpi | medium-dpi | low-dpi]
+
+第三课:媒体查询
+引入方式
+    1.
+<link rel="stylesheet" type="text/css" href="index.css" media="all and (min-width: 600px)">
+复制代码
+  2.
+@import url("css/reset.css") all and (min-width: 600px) ;
+复制代码
+    3.
+@media all and (min-width: 600px)
+{
+    .box
+    {
+        width:100px;
+    }
+}
+复制代码
+
+媒体类型
+    1.all 所有媒体
+    2.braille 盲文触觉设备
+    3.embossed 盲文打印机
+    4.print 手持设备
+    5.projection 打印预览
+    6.screen 彩屏设备
+    7.speech '听觉'类似的媒体类型
+    8.tty 不适用像素的设备
+    9.tv  电视
+
+媒体特性
+    1.(max-width:599px)
+    2.(min-width:600px)
+    3.(orientation:portrait) 竖屏
+    4.(orientation:landscape)        横屏
+    5.(-webkit-min-device-pixel-ratio: 2) 像素比
+
+
+
+关键字
+    1.and
+    2.not      not关键字是用来排除某种制定的媒体类型
+    3.only     only用来定某种特定的媒体类型
+         -很多时候是用来对那些不支持媒体特性但却支持媒体类型的设备
