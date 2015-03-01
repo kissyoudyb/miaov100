@@ -19,3 +19,12 @@
                  β 围绕这X轴的旋转
                  γ 围绕这Y轴的旋转
 
+
+第二课:viewport
+<meta name="viewport" content="" />
+           1.width [pixel_value | device-width]
+        2.user-scalable 是否允许缩放 （no||yes）
+        3.initial-scale 初始比例
+        4.minimum-scale 允许缩放的最小比例
+        5.maximum-scale 允许缩放的最大比例
+        6.target-densitydpi [dpi_value | device-dpi | high-dpi | medium-dpi | low-dpi]
