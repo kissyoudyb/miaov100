@@ -92,3 +92,57 @@
 rem 相对于根节点的字体大小的计量单位
 
 em 相对于字体大小的 font-size:24  1em=24px
+
+CSS中的background-size属性：
+
+background-size的值类型：1个或2个值，这些值既可以是像素px，也可以是百分比%或auto，还可以是特定值cover, contain。
+
+　　background-size可以设置2个值，1个为必填，1个为可选。
+　　其中第1个值用于指定背景图的width，第2个值用于指定背景图的height，如果只给background-size设置1个值，则第2个值默认为auto高度自动 (通常默认高度是auto自动,自适用内容而增高,通常如果想高度自适应不用设置) （cover和contain特定值除外）。
+
+div{
+background-image:url(test.png);
+background-repeat:no-repeat;
+background-size:100px;
+}
+
+　　等价于：
+
+div{
+background-image:url(test.png);
+background-repeat:no-repeat;
+background-size:100px auto;
+}
+
+　　查看具体DEMO: background-size的值定义。当你使用firebug抓取到那个实例节点时，你会发现第二个值被自动加上了并且值为auto。当然，你也可以手动将第2个值设置为auto，然后与该DEMO的实例对比，它们的效果将是相同的。
+
+　　background-size的特定值：
+
+cover: 保持图像本身的宽高比例，将图片缩放到正好完全覆盖定义背景的区域；
+contain: 保持图像本身的宽高比例，将图片缩放到宽度或高度正好适应定义背景的区域；
+cover值：
+
+div{
+background-image:url(test.png);
+background-repeat:no-repeat;
+background-size:cover;
+}
+
+　　上例，背景图片将覆盖整个div区域。查看具体DEMO: background-size:cover。
+
+contain值：
+
+div{
+background-image:url(test.png);
+background-repeat:no-repeat;
+background-size:contain;
+}
+
+　　上例，背景图将缩放到宽度或高度的任意一边与div区域适应。查看具体DEMO: background-size:contain。
+
+--------------------------------------------------------------
+click 事件在移动端会有300ms的延迟
+touch事件
+touchstart == mousedown
+touchmove == mousemove
+touchend == mouseup
