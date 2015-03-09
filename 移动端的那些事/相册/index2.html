@@ -105,14 +105,22 @@
             border-color: #0e0e0e;
         }
 
+        .picList {
+            position: relative;
+        }
+
         .picList li {
-            float: left;
+            position: absolute;
             width: 1rem;
             height: 1rem;
             background: url("img/1.jpg") no-repeat;
             background-size: cover;
             border: 1px solid #000;
             box-sizing: border-box;
+            /*动画效果*/
+            transition: .5s left, .5s top;
+            top: 0;
+            left: 0;
         }
 
         .recycle {
@@ -163,34 +171,71 @@
         var aBtns = oPage.getElementsByClassName('btn');
         var sHtml = "";
         var aRemove = [];
+        var bOff = true;
 
         for (var i = 0; i < aData.length; i++) {
             sHtml += "<li style='background-image:url(" + aData[i] + ");'></li>";
         }
         //alert(sHtml);
         oList.innerHTML = sHtml;
-       /* aBtns[1].addEventListener("touchstart", function(){console.log('start')}, false);
-        aBtns[1].addEventListener("touchmove", function(){console.log('move')}, false);
-        aBtns[1].addEventListener("touchend", function(){console.log('end')}, false);
-        */
-        aBtns[1].addEventListener("touchend",fnEnd, false);
+
+        //transition必须要在li渲染完之后才会出效果，所以加上延时60ms
+        setTimeout(function(){
+            toPosition();
+        }, 60);
+
+        /* aBtns[1].addEventListener("touchstart", function(){console.log('start')}, false);
+         aBtns[1].addEventListener("touchmove", function(){console.log('move')}, false);
+         aBtns[1].addEventListener("touchend", function(){console.log('end')}, false);
+         */
+        aBtns[1].addEventListener("touchend", fnEnd, false);
         aBtns[0].addEventListener("touchend", fnRemove, false);
         //alert(aLi.length);
+
         /**
-         * 手指点击选择后动作
-         */
-        function fnEnd(){
-            this.innerHTML = "取消";
-            for(var i=0; i<aLi.length; i++){
-                aLi[i].index = i;
-                aLi[i].addEventListener("touchend",fnSelected, false);
+         *    0 l 0 t 0   0/3 0
+         *    1 l 1 t 0   1/3 0.333
+         *    2 l 2 t 0   2/3 0.666
+         *    3 l 0 t 1   3/3 1
+         *    4 l 1 t 1   4/3 1.333
+         *    5 l 2 t l   5/3 1.666
+         *
+         *    li进行绝对定位，保证动画效果的实现
+         * */
+        function toPosition() {
+            for (var i = 0; i < aLi.length; i++) {
+                aLi[i].style.left = i % 3 + "rem";
+                aLi[i].style.top = Math.floor(i / 3) + "rem";
             }
+        }
+
+        /**
+         * 手指点击选择删除后动作
+         */
+        function fnEnd() {
+            if (bOff) {
+                aBtns[1].innerHTML = "取消";
+                for (var i = 0; i < aLi.length; i++) {
+                    aLi[i].index = i;
+                    aLi[i].addEventListener("touchend", fnSelected, false);
+                }
+            } else {
+                aBtns[1].innerHTML = "选择";
+                aBtns[0].style.display = "none";
+
+                for (var i = 0; i < aLi.length; i++) {
+                    aLi[i].style.opacity = 1;
+                    aLi[i].removeEventListener("touchend", fnSelected, false);
+                }
+                aRemove.length = 0;
+            }
+            bOff = !bOff;
         }
 
         /**
          * 图片被选择时的事件
          */
-        function fnSelected(){
+        function fnSelected() {
             aRemove.push(this.index);
             this.style.opacity = 0.2;
             aBtns[0].style.display = "block";
@@ -199,23 +244,30 @@
         /**
          * 点击删除按钮后的事件
          */
-        function fnRemove(){
+        function fnRemove() {
             /*
-            for(var i=0; i<aRemove.length; i++){
-                oList.removeChild(aLi[i]);
-            }
-            */
+             for(var i=0; i<aRemove.length; i++){
+             oList.removeChild(aLi[i]);
+             }
+             */
             //alert(aRemove);
             //给删除数组排序，保证pop顺序的正确性
-            aRemove = aRemove.sort(function(a,b){
-               return a-b;
+            aRemove = aRemove.sort(function (a, b) {
+                return a - b;
             });
             alert(aRemove);
-            while(aRemove.length){
+            while (aRemove.length) {
                 var iNum = aRemove.pop();
-                alert(iNum);
+                //alert(iNum);
                 oList.removeChild(aLi[iNum]);
             }
+            //解决index没有重置导致删除图片错乱的问题
+            bOff = false;
+            fnEnd();
+
+            //删除后重新定位
+            toPosition();
+
         }
     }
     create(aData);
